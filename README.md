@@ -47,7 +47,9 @@
 
 Axer is a straightforward yet effective Python-based framework tailored to simplify the process of working with digital exploits. This lightweight program is designed to offer users a user-friendly and accessible approach to managing and deploying exploits, catering to both novice and experienced users.
 
-![image](https://media.discordapp.net/attachments/1115614887658410085/1141341557128167434/2023-08-16_13-18_1.png)
+
+![image](https://github.com/0romos/Axer/assets/138330732/507550bb-7e26-4a3e-9317-be439cb22784)
+
 
 Axer is your passport to a customized exploit framework, enhancing the capabilities of your Banner Project Repository. Remember, ethical and responsible use of such tools is paramount. Ensure they are harnessed only for authorized and legitimate security testing purposes.
 
