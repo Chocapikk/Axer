@@ -1,5 +1,14 @@
-import json
 import os
+import json
+
+from data.logger import Logger
+
+
+class Log:
+
+    def msg(status):
+        Logger.__client_logger__(status, "logs.vs", "./logs/")
+
 
 class HelpCommand:
     """
@@ -64,7 +73,7 @@ class HelpCommand:
                     print(f"    {i: <4}{exploit_instance.name: <19}{exploit_instance.author: <15}{exploit_instance.creation_date: <18}{exploit_instance.description}")
                 print()
             else:
-                print(f"No exploits found in the '{folder_name}' folder. Use 'help' to see available commands.")
+                Log.msg(f"No exploits found in the '{folder_name}' folder")
         else:
             for i, command in enumerate(self.help_commands_json["commands"], 1):
                 print(f"    {i: <4}{command['name']: <19}{command['author']: <15}{command['date']: <18}{command['description']}")
@@ -81,7 +90,7 @@ class HelpCommand:
         if command in self.commands:
             self.commands[command](*args)
         else:
-            print(f"Command '{command}' not found in available commands.")
+            Log.msg(f"Command '{command}' not found in available commands.")
 
 
 class Subcommands:
