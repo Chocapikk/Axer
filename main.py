@@ -1,11 +1,14 @@
 import os
+import sys
 import inspect
+
+from data.clear          import ClearScreen
+from data.banner         import Display
+from data.logger         import Logger
+from core.modular        import Module
+from modules.help        import HelpCommand
+from modules.search      import SearchCommand
 from importlib.machinery import SourceFileLoader
-from modules.help import HelpCommand
-from data.clear import ClearScreen
-from data.banner import Display
-from data.logger import Logger
-from core.modular import Module
 
 
 class ExploitLoader:
@@ -20,57 +23,74 @@ class ExploitLoader:
         """Initialize an ExploitLoader object with an empty list of exploits."""
         self.exploits = []
 
-    def load_exploits(self):
+    def load_exploits(self, directory="exploits"):
         """
-        Load exploit modules from the 'exploits' directory and instantiate them.
+        Load exploit modules from the specified directory and its subfolders.
 
-        This method iterates through Python files in the 'exploits' directory,
-        loads each module, and instantiates classes that are subclasses of Module.
-        The instantiated exploit instances are added to the 'exploits' list.
+        This method iterates through Python files in the specified directory
+        and its subfolders, loads each module, and instantiates classes that
+        are subclasses of Module. The instantiated exploit instances are added
+        to the 'exploits' list.
+
+        Args:
+            directory (str): The base directory to search for exploit modules.
         """
-        exploits_directory = "exploits"
-        for filename in os.listdir(exploits_directory):
-            if filename.endswith(".py") and filename != "__init__.py":
-                exploit_module = SourceFileLoader(
-                    filename[:-3], os.path.join(exploits_directory, filename)).load_module()
-                Logger.__client_logger__(f"Loaded {filename[:-3]} module", "logs.vs", "./logs/")
-                for name, obj in inspect.getmembers(exploit_module):
-                    if inspect.isclass(obj) and issubclass(obj, Module) and obj is not Module:
-                        exploit_instance = obj()
-                        self.exploits.append(exploit_instance)
+        for root, dirs, files in os.walk(directory):
+            for filename in files:
+                if filename.endswith(".py") and filename != "__init__.py":
+                    full_path = os.path.join(root, filename)
+                    exploit_module = SourceFileLoader(
+                        filename[:-3], full_path).load_module()
+                    for name, obj in inspect.getmembers(exploit_module):
+                        if inspect.isclass(obj) and issubclass(obj, Module) and obj is not Module:
+                            exploit_instance = obj()
+                            exploit_instance.folder = os.path.relpath(root, directory)
+                            self.exploits.append(exploit_instance)
+                    Logger.__client_logger__(f"Loaded {filename[:-3]} module", "logs.vs", "./logs/")
 
-def main(loader, help_command):
+def main(loader, help_command, search_command):
     """
     Main function to interact with loaded exploit modules.
 
     This function provides a loop that takes user input, allowing interaction
     with loaded exploit modules. Users can execute exploits, display help,
-    or exit the program.
+    search for exploits, or exit the program.
 
     Args:
         loader (ExploitLoader): An instance of the ExploitLoader class.
         help_command (HelpCommand): An instance of the HelpCommand class.
+        search_command (SearchCommand): An instance of the SearchCommand class.
     """
     try:
         while True:
-            user_input = input("(local) axer ~$ ").strip()
-            if user_input == "help":
-                help_command.execute(loader.exploits)
-            elif user_input == "exit":
-                print("Exiting...")
-                break
-            else:
-                exploit_instance = next(
-                    (exploit for exploit in loader.exploits if exploit.name == user_input), None)
-                if exploit_instance:
-                    print()
-                    exploit_instance.execute()
-                    print()
-                else:
-                    print(f"Command '{user_input}' does not exist.")
+            user_input = input("(local) axer ~$ ").strip().split()
+            command = user_input[0]
+
+            match command:
+                case "help":
+                    folder_name = user_input[1] if len(user_input) > 1 else None
+                    help_command.execute(loader.exploits, folder_name)
+                case "search":
+                    search_term = user_input[1] if len(user_input) > 1 else None
+                    if search_term:
+                        search_command.execute(loader.exploits, search_term)
+                    else:
+                        print("Please provide a search term.")
+                case "exit":
+                    print("Exiting...")
+                    break
+                case _:
+                    exploit_instance = next(
+                        (exploit for exploit in loader.exploits if exploit.name == command), None)
+                    if exploit_instance:
+                        print()
+                        exploit_instance.execute()
+                        print()
+                    else:
+                        help_command.execute_command(command)
     except KeyboardInterrupt:
         print("\nExiting...")
-
+        sys.exit()
 
 if __name__ == "__main__":
     ClearScreen.clear()
@@ -78,4 +98,5 @@ if __name__ == "__main__":
     loader = ExploitLoader()
     loader.load_exploits()
     help_command = HelpCommand()
-    main(loader, help_command)
+    search_command = SearchCommand()
+    main(loader, help_command, search_command)
