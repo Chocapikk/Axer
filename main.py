@@ -12,6 +12,12 @@ from modules.search      import SearchCommand
 from importlib.machinery import SourceFileLoader
 
 
+class Log:
+
+    def msg(status):
+        Logger.__client_logger__(status, "logs.vs", "./logs/")
+
+
 class ExploitLoader:
     """
     A class to load and manage exploit modules.
@@ -48,6 +54,8 @@ class ExploitLoader:
                             exploit_instance.folder = os.path.relpath(root, directory)
                             self.exploits.append(exploit_instance)
                     Logger.__client_logger__(f"Loaded {filename[:-3]} module", "logs.vs", "./logs/")
+        print(" ")
+
 
 def main(loader, help_command, search_command):
     """
@@ -76,9 +84,10 @@ def main(loader, help_command, search_command):
                     if search_term:
                         search_command.execute(loader.exploits, search_term)
                     else:
-                        print("Please provide a search term.")
+                        print("")
+                        Log.msg("Please provide a search term\n")
                 case "exit":
-                    print("Exiting...")
+                    Log.msg("Exiting Axer...")
                     break
                 case _:
                     exploit_instance = next(
@@ -90,7 +99,8 @@ def main(loader, help_command, search_command):
                     else:
                         help_command.execute_command(command)
     except KeyboardInterrupt:
-        print("\nExiting...")
+        print("")
+        Log.msg("Exiting Axer...")
         sys.exit()
 
 if __name__ == "__main__":
