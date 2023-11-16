@@ -1,6 +1,6 @@
 from cutepy                        import RGB
-from prompt_toolkit import PromptSession
-from prompt_toolkit.styles import Style
+from prompt_toolkit                import PromptSession
+from prompt_toolkit.styles         import Style
 from prompt_toolkit.formatted_text import HTML
 
 def _generate_oscillating_gradient(start_color, end_color, steps):
@@ -43,7 +43,7 @@ def input_data(exploit_name, prompt_title):
     color_hex_for_prompt = '#{:02x}{:02x}{:02x}'.format(*color_rgb)
 
     style = Style.from_dict({
-        'input_prompt': f'fg:{color_hex_for_prompt}',  # Style pour le prompt
+        'input_prompt': f'fg:{color_hex_for_prompt}',
     })
 
     full_prompt = HTML(
