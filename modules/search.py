@@ -1,4 +1,11 @@
-# modules/search.py
+from data.logger import Logger
+
+
+class Log:
+
+    def msg(status):
+        Logger.__client_logger__(status, "logs.vs", "./logs/")
+
 
 class SearchCommand:
     """
@@ -36,4 +43,5 @@ class SearchCommand:
                 print(f"    {i: <4}{exploit_instance.name: <19}{exploit_instance.author: <15}{exploit_instance.creation_date: <18}{exploit_instance.description}")
             print()
         else:
-            print(f"\nNo results found for '{search_term}'.\n")
+            print(" ")
+            Log.msg(f"No results found for -> {search_term}\n")
