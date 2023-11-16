@@ -1,0 +1,35 @@
+{
+    "commands": [
+      {
+        "name": "help",
+        "author": "oromos",
+        "date": "16-11-2023",
+        "description": "Display the help menu."
+      },
+      {
+        "name": "exit",
+        "author": "oromos",
+        "date": "16-11-2023",
+        "description": "Exit the program."
+      },
+      {
+        "name": "clear",
+        "author": "oromos",
+        "date": "16-11-2023",
+        "description": "Clear the screen."
+      },
+      {
+        "name": "exploits",
+        "author": "oromos",
+        "date": "16-11-2023",
+        "description": "Display available exploit modules."
+      },
+      {
+        "name": "search",
+        "author": "oromos",
+        "date": "16-11-2023",
+        "description": "Search for exploit modules based on a search term."
+      }
+    ]
+  }
+  
