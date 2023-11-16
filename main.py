@@ -108,7 +108,7 @@ def main(loader, help_command, search_command):
         print("")
         Log.msg("Exiting Axer...")
         sys.exit()
-
+ 
 
 
 
