@@ -73,9 +73,12 @@ def main(loader, help_command, search_command):
     try:
         while True:
             user_input = input("(local) axer ~$ ").strip().split()
-            command = user_input[0]
+            command = user_input[0] if user_input else None
 
             match command:
+                case "":
+                    # Handle empty input
+                    pass
                 case "help":
                     folder_name = user_input[1] if len(user_input) > 1 else None
                     help_command.execute(loader.exploits, folder_name)
@@ -89,7 +92,7 @@ def main(loader, help_command, search_command):
                 case "exit":
                     Log.msg("Exiting Axer...")
                     break
-                case _:
+                case _ if command is not None:
                     exploit_instance = next(
                         (exploit for exploit in loader.exploits if exploit.name == command), None)
                     if exploit_instance:
@@ -98,10 +101,16 @@ def main(loader, help_command, search_command):
                         print()
                     else:
                         help_command.execute_command(command)
+                case _:
+                    pass
+
     except KeyboardInterrupt:
         print("")
         Log.msg("Exiting Axer...")
         sys.exit()
+
+
+
 
 if __name__ == "__main__":
     ClearScreen.clear()
