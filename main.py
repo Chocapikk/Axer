@@ -2,6 +2,7 @@ import os
 import sys
 import inspect
 
+from x64.wifi            import Connection
 from data.clear          import ClearScreen
 from data.banner         import Display
 from data.logger         import Logger
@@ -95,6 +96,7 @@ def main(loader, help_command, search_command):
 if __name__ == "__main__":
     ClearScreen.clear()
     Display.banner()
+    Connection.check_wifi()
     loader = ExploitLoader()
     loader.load_exploits()
     help_command = HelpCommand()
