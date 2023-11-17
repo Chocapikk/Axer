@@ -66,25 +66,25 @@ def input_data(exploit_name, prompt_title):
 
 
 def print_success(message):
-    start_color = (0, 128, 0)
+    start_color = (0, 255, 0)
     end_color = (144, 238, 144)
     _print_oscillating_gradient("[SUCCESS] " + message, start_color, end_color)
 
 
 def print_error(message):
-    start_color = (128, 0, 0)
+    start_color = (255, 0, 0)
     end_color = (255, 99, 71)
     _print_oscillating_gradient("[ERROR] " + message, start_color, end_color)
 
 
 def print_status(message):
-    start_color = (70, 130, 180)
+    start_color = (30, 144, 255)
     end_color = (135, 206, 250)
     _print_oscillating_gradient("[STATUS] " + message, start_color, end_color)
 
 
 def print_info(message):
-    start_color = (255, 215, 0)
+    start_color = (255, 255, 0)
     end_color = (255, 255, 224)
     _print_oscillating_gradient("[INFO] " + message, start_color, end_color)
 
