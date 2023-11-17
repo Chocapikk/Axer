@@ -65,3 +65,16 @@ class Table:
                 [str(item).ljust(width) for item, width in zip(row, self.column_widths)]
             )
             print(f"{self.spacing}{formatted_row}")
+
+
+if __name__ == "__main__":
+    header_titles = ["#", "Name", "Author", "Date", "Description"]
+    column_widths = [4, 20, 20, 20, 50]
+
+    data_rows = [
+        [1, "ExploitName1", "Author1", "01-01-2021", "Description of ExploitName1"],
+        [2, "ExploitName2", "Author2", "02-02-2022", "Description of ExploitName2"],
+    ]
+
+    table = Table(header_titles, column_widths, title="This is a table")
+    table.print_table(data_rows)
