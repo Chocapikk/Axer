@@ -45,7 +45,7 @@ class SearchCommand:
 
         if matching_exploits:
             header_titles = ["#", "Name", "Author", "Date", "Description"]
-            column_widths = [4, 19, 15, 18, 30]
+            column_widths = [4, 20, 20, 20, 50]
             header_row = "".join(
                 [
                     title.ljust(width)
