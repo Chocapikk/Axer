@@ -26,13 +26,21 @@ class SearchCommand:
         """
         Perform a search for exploit modules based on a search term.
 
-        This method prints a formatted list of exploit modules that match the search term.
+        This method prints a formatted list of exploit modules that match the search term in name, author's username, or description.
 
         Args:
             exploits (list): A list of exploit instances to be searched.
-            search_term (str): The search term to match against exploit module names.
+            search_term (str): The search term to match against exploit module names, author usernames, and descriptions.
         """
-        matching_exploits = [exploit for exploit in exploits if search_term.lower() in exploit.name.lower()]
+        matching_exploits = [
+            exploit
+            for exploit in exploits
+            if (
+                search_term.lower() in exploit.name.lower()
+                or search_term.lower() in exploit.author.lower()  # Assuming author is a username
+                or search_term.lower() in exploit.description.lower()
+            )
+        ]
 
         if matching_exploits:
             print(f"\n    Search Results for '{search_term}'\n    {'=' * (24 + len(search_term))}")
