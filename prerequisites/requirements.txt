@@ -1,5 +1,10 @@
+alive_progress==3.1.4
 cutepy==0.0.4
 dnspython==2.4.2
+leakpy==1.6.6
 netifaces==0.11.0
+prompt_toolkit==3.0.36
+pwncat==0.1.2
 requests==2.25.1
 scapy==2.5.0
+bs4

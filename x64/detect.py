@@ -1,6 +1,7 @@
 import os
 import contextlib
 
+
 class SystemDetection:
     """
     A utility class for detecting the underlying operating system.

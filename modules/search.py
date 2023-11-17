@@ -2,7 +2,6 @@ from data.logger import Logger
 
 
 class Log:
-
     def msg(status):
         Logger.__client_logger__(status, "logs.vs", "./logs/")
 
@@ -30,17 +29,53 @@ class SearchCommand:
 
         Args:
             exploits (list): A list of exploit instances to be searched.
-            search_term (str): The search term to match against exploit module names.
+            search_term (str): The search term to match against exploit module attributes.
         """
-        matching_exploits = [exploit for exploit in exploits if search_term.lower() in exploit.name.lower()]
+
+        search_term_lower = search_term.lower()
+
+        matching_exploits = [
+            exploit
+            for exploit in exploits
+            if search_term_lower in exploit.name.lower()
+            or search_term_lower in exploit.author.lower()
+            or search_term_lower in exploit.description.lower()
+            or search_term_lower in exploit.creation_date.lower()
+        ]
 
         if matching_exploits:
-            print(f"\n    Search Results for '{search_term}'\n    {'=' * (24 + len(search_term))}")
-            print("""
-    #   Name               Author         Date              Description
-    -   ----               ------         ----              -----------""")
+            header_titles = ["#", "Name", "Author", "Date", "Description"]
+            column_widths = [4, 19, 15, 18, 30]
+            header_row = "".join(
+                [
+                    title.ljust(width)
+                    for title, width in zip(header_titles, column_widths)
+                ]
+            )
+            dash_line = "".join(
+                [
+                    ("-" * len(title)).ljust(width)
+                    for title, width in zip(header_titles, column_widths)
+                ]
+            )
+            search_result = f"Search Results for '{search_term}'"
+
+            print(f"\n    {search_result}\n    {'=' * (len(search_result))}")
+            print(f"    {header_row}")
+            print(f"    {dash_line}")
+
             for i, exploit_instance in enumerate(matching_exploits, 1):
-                print(f"    {i: <4}{exploit_instance.name: <19}{exploit_instance.author: <15}{exploit_instance.creation_date: <18}{exploit_instance.description}")
+                row_data = [
+                    str(i),
+                    exploit_instance.name,
+                    exploit_instance.author,
+                    exploit_instance.creation_date,
+                    exploit_instance.description,
+                ]
+                row = "".join(
+                    [data.ljust(width) for data, width in zip(row_data, column_widths)]
+                )
+                print(f"    {row}")
             print()
         else:
             print(" ")

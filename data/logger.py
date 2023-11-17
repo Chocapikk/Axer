@@ -15,9 +15,9 @@ class Variables:
 
     global start_time, logger_time
 
-    start_time      = time.time()
-    logger_time     = datetime.datetime.now()
-    logger_time     = logger_time.strftime("%H:%M:%S")
+    start_time = time.time()
+    logger_time = datetime.datetime.now()
+    logger_time = logger_time.strftime("%H:%M:%S")
 
 
 class Colors:
@@ -31,10 +31,10 @@ class Colors:
         reset (str): The color code to reset formatting.
     """
 
-    green           = HEX.print("e3d5ae")
-    muted           = HEX.print("877a69")
-    foreground      = HEX.print("efe9d4")
-    reset           = HEX.reset
+    green = HEX.print("e3d5ae")
+    muted = HEX.print("877a69")
+    foreground = HEX.print("efe9d4")
+    reset = HEX.reset
 
 
 class Logger:
@@ -63,6 +63,6 @@ class Logger:
         """
         log_message = f"{Colors.muted}{logger_time}{Colors.reset} {Colors.green}__{Logger.__client_logger__}__{Colors.reset}{Colors.foreground} | {status} {Colors.reset}"
         print(log_message)
-        
-        with open(os.path.join(path, file_name), 'a') as file:
-            file.write(f"__{Logger.__client_logger__}__ | {status}" + '\n')
+
+        with open(os.path.join(path, file_name), "a") as file:
+            file.write(f"__{Logger.__client_logger__}__ | {status}" + "\n")

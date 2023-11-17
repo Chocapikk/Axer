@@ -1,6 +1,7 @@
 import os
 from x64.detect import SystemDetection
 
+
 class ClearScreen:
     """
     A utility class for clearing the terminal screen.
@@ -24,7 +25,7 @@ class ClearScreen:
             On Windows, the 'cls' command is used to clear the screen.
             On Unix-like systems (Linux, macOS), the 'clear' command is used.
         """
-        if SystemDetection.detect() == 'Windows':
-            os.system('cls')
+        if SystemDetection.detect() == "Windows":
+            os.system("cls")
         else:
-            os.system('clear')
+            os.system("clear")

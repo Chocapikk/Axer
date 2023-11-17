@@ -5,7 +5,6 @@ from data.logger import Logger
 
 
 class Log:
-
     def msg(status):
         Logger.__client_logger__(status, "logs.vs", "./logs/")
 
@@ -31,7 +30,7 @@ class HelpCommand:
             "exit": None,
             "clear": lambda: os.system("clear"),
             "exploits": Subcommands.list_exploits,
-            "search": None
+            "search": None,
         }
 
         self.help_commands_json = self.load_help_commands()
@@ -43,7 +42,9 @@ class HelpCommand:
         Returns:
             dict: The loaded JSON structure.
         """
-        file_path = os.path.join(os.path.dirname(__file__), "help_commands", "struct.json")
+        file_path = os.path.join(
+            os.path.dirname(__file__), "help_commands", "struct.json"
+        )
         with open(file_path, "r") as file:
             return json.load(file)
 
@@ -51,33 +52,42 @@ class HelpCommand:
         """
         Display a formatted help menu for available exploit modules.
 
-        This method prints a formatted help menu that lists the available exploit modules,
-        including their names, authors, creation dates, and descriptions. It also supports
-        filtering the display based on a specified folder.
-
         Args:
             exploits (list): A list of exploit instances to be displayed in the help menu.
             folder_name (str, optional): The name of the folder to filter exploits. Default is None.
         """
-        print("""
-    Help Menu
-    =========
-        
-    #   Name               Author         Date              Description
-    -   ----               ------         ----              -----------""")
-        
+
+        header_titles = ["#", "Name", "Author", "Date", "Description"]
+        column_widths = [4, 20, 20, 20, 50]
+        header = "".join(
+            [title.ljust(width) for title, width in zip(header_titles, column_widths)]
+        )
+        dash_line = "".join(
+            [
+                ("-" * len(title)).ljust(width)
+                for title, width in zip(header_titles, column_widths)
+            ]
+        )
+
+        print(f"\n    Help Menu\n    {'=' * 8}\n    {header}\n    {dash_line}")
+
         if folder_name:
-            filtered_exploits = [exploit for exploit in exploits if exploit.folder == folder_name]
+            filtered_exploits = [
+                exploit for exploit in exploits if exploit.folder == folder_name
+            ]
             if filtered_exploits:
                 for i, exploit_instance in enumerate(filtered_exploits, 1):
-                    print(f"    {i: <4}{exploit_instance.name: <19}{exploit_instance.author: <15}{exploit_instance.creation_date: <18}{exploit_instance.description}")
-                print()
+                    print(
+                        f"    {i:<{column_widths[0]}}{exploit_instance.name:<{column_widths[1]}}{exploit_instance.author:<{column_widths[2]}}{exploit_instance.creation_date:<{column_widths[3]}}{exploit_instance.description:<{column_widths[4]}}"
+                    )
             else:
                 Log.msg(f"No exploits found in the '{folder_name}' folder")
         else:
             for i, command in enumerate(self.help_commands_json["commands"], 1):
-                print(f"    {i: <4}{command['name']: <19}{command['author']: <15}{command['date']: <18}{command['description']}")
-            print("")
+                print(
+                    f"    {i:<{column_widths[0]}}{command['name']:<{column_widths[1]}}{command['author']:<{column_widths[2]}}{command['date']:<{column_widths[3]}}{command['description']:<{column_widths[4]}}"
+                )
+        print()
 
     def execute_command(self, command, *args):
         """
@@ -107,16 +117,31 @@ class Subcommands:
         Display a list of available exploit modules.
         """
         exploits_path = "exploits/"
-        folders = [folder for folder in os.listdir(exploits_path) if os.path.isdir(os.path.join(exploits_path, folder))]
-        
-        print("""
-    Exploits
-    =========
+        if not os.path.exists(exploits_path):
+            print("Exploits directory does not exist.")
+            return
 
-    #   Name
-    -   ----""")
+        header_titles = ["#", "Name"]
+        column_widths = [4, 20]
+        header = "".join(
+            [title.ljust(width) for title, width in zip(header_titles, column_widths)]
+        )
+        dash_line = "".join(
+            [
+                ("-" * len(title)).ljust(width)
+                for title, width in zip(header_titles, column_widths)
+            ]
+        )
 
+        print("\n    Exploits\n    " + "=" * 8)
+        print(f"    {header}\n    {dash_line}")
+
+        folders = [
+            folder
+            for folder in os.listdir(exploits_path)
+            if os.path.isdir(os.path.join(exploits_path, folder))
+        ]
         for i, folder in enumerate(folders, 1):
-            print(f"    {i: <4}{folder}")
-        
+            print(f"    {i:<{column_widths[0]}}{folder:<{column_widths[1]}}")
+
         print("\nSyntax: help <exploit-name>\n")

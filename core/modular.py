@@ -13,7 +13,6 @@ class Module:
     """
 
     def __init__(self):
-        
         """Initialize a Module object (no specific attributes required)."""
         pass
 

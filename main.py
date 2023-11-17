@@ -2,18 +2,17 @@ import os
 import sys
 import inspect
 
-from x64.wifi            import Connection
-from data.clear          import ClearScreen
-from data.banner         import Display
-from data.logger         import Logger
-from core.modular        import Module
-from modules.help        import HelpCommand
-from modules.search      import SearchCommand
+from data.logger import Logger
+from core.modular import Module
+from data.banner import Display
+from x64.wifi import Connection
+from data.clear import ClearScreen
+from modules.help import HelpCommand
+from modules.search import SearchCommand
 from importlib.machinery import SourceFileLoader
 
 
 class Log:
-
     def msg(status):
         Logger.__client_logger__(status, "logs.vs", "./logs/")
 
@@ -47,13 +46,20 @@ class ExploitLoader:
                 if filename.endswith(".py") and filename != "__init__.py":
                     full_path = os.path.join(root, filename)
                     exploit_module = SourceFileLoader(
-                        filename[:-3], full_path).load_module()
+                        filename[:-3], full_path
+                    ).load_module()
                     for name, obj in inspect.getmembers(exploit_module):
-                        if inspect.isclass(obj) and issubclass(obj, Module) and obj is not Module:
+                        if (
+                            inspect.isclass(obj)
+                            and issubclass(obj, Module)
+                            and obj is not Module
+                        ):
                             exploit_instance = obj()
                             exploit_instance.folder = os.path.relpath(root, directory)
                             self.exploits.append(exploit_instance)
-                    Logger.__client_logger__(f"Loaded {filename[:-3]} module", "logs.vs", "./logs/")
+                    Logger.__client_logger__(
+                        f"Loaded {filename[:-3]} module", "logs.vs", "./logs/"
+                    )
         print(" ")
 
 
@@ -94,7 +100,13 @@ def main(loader, help_command, search_command):
                     break
                 case _ if command is not None:
                     exploit_instance = next(
-                        (exploit for exploit in loader.exploits if exploit.name == command), None)
+                        (
+                            exploit
+                            for exploit in loader.exploits
+                            if exploit.name == command
+                        ),
+                        None,
+                    )
                     if exploit_instance:
                         print()
                         exploit_instance.execute()
@@ -108,8 +120,6 @@ def main(loader, help_command, search_command):
         print("")
         Log.msg("Exiting Axer...")
         sys.exit()
- 
-
 
 
 if __name__ == "__main__":
