@@ -11,10 +11,28 @@ from modules.help        import HelpCommand
 from modules.search      import SearchCommand
 from importlib.machinery import SourceFileLoader
 
-
 class Log:
+    """
+    Log class for handling and displaying log messages.
 
-    def msg(status):
+    Methods:
+        msg(status: str) -> None:
+            Log a message using the Logger class.
+
+    Attributes:
+        None
+    """
+
+    def msg(status: str) -> None:
+        """
+        Log a message using the Logger class.
+
+        Parameters:
+            status (str): The message to be logged.
+
+        Returns:
+            None
+        """
         Logger.__client_logger__(status, "logs.vs", "./logs/")
 
 
@@ -22,15 +40,22 @@ class ExploitLoader:
     """
     A class to load and manage exploit modules.
 
+    Methods:
+        __init__() -> None:
+            Initialize an ExploitLoader object with an empty list of exploits.
+
+        load_exploits(directory: str = "exploits") -> None:
+            Load exploit modules from the specified directory and its subfolders.
+
     Attributes:
         exploits (list): A list to store loaded exploit instances.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize an ExploitLoader object with an empty list of exploits."""
         self.exploits = []
 
-    def load_exploits(self, directory="exploits"):
+    def load_exploits(self, directory: str = "exploits") -> None:
         """
         Load exploit modules from the specified directory and its subfolders.
 
@@ -39,8 +64,11 @@ class ExploitLoader:
         are subclasses of Module. The instantiated exploit instances are added
         to the 'exploits' list.
 
-        Args:
+        Parameters:
             directory (str): The base directory to search for exploit modules.
+
+        Returns:
+            None
         """
         for root, dirs, files in os.walk(directory):
             for filename in files:
@@ -56,8 +84,7 @@ class ExploitLoader:
                     Logger.__client_logger__(f"Loaded {filename[:-3]} module", "logs.vs", "./logs/")
         print(" ")
 
-
-def main(loader, help_command, search_command):
+def main(loader: ExploitLoader, help_command: HelpCommand, search_command: SearchCommand) -> None:
     """
     Main function to interact with loaded exploit modules.
 
@@ -65,10 +92,13 @@ def main(loader, help_command, search_command):
     with loaded exploit modules. Users can execute exploits, display help,
     search for exploits, or exit the program.
 
-    Args:
+    Parameters:
         loader (ExploitLoader): An instance of the ExploitLoader class.
         help_command (HelpCommand): An instance of the HelpCommand class.
         search_command (SearchCommand): An instance of the SearchCommand class.
+
+    Returns:
+        None
     """
     try:
         while True:
@@ -77,7 +107,6 @@ def main(loader, help_command, search_command):
 
             match command:
                 case "":
-                    # Handle empty input
                     pass
                 case "help":
                     folder_name = user_input[1] if len(user_input) > 1 else None
@@ -108,8 +137,6 @@ def main(loader, help_command, search_command):
         print("")
         Log.msg("Exiting Axer...")
         sys.exit()
- 
-
 
 
 if __name__ == "__main__":
