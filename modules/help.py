@@ -4,6 +4,7 @@ import json
 from data.logger import Logger
 from modules.table import Table
 
+
 class Log:
     def msg(status):
         Logger.__client_logger__(status, "logs.vs", "./logs/")
@@ -60,7 +61,7 @@ class HelpCommand:
         header_titles = ["#", "Name", "Author", "Date", "Description"]
         column_widths = [4, 20, 20, 20, 50]
 
-        title= "Help Menu"
+        title = "Help Menu"
         table = Table(header_titles, column_widths, title=title)
 
         data_rows = []
@@ -70,14 +71,26 @@ class HelpCommand:
             ]
             if filtered_exploits:
                 data_rows = [
-                    [i, exploit.name, exploit.author, exploit.creation_date, exploit.description]
+                    [
+                        i,
+                        exploit.name,
+                        exploit.author,
+                        exploit.creation_date,
+                        exploit.description,
+                    ]
                     for i, exploit in enumerate(filtered_exploits, 1)
                 ]
             else:
                 Log.msg(f"No exploits found in the '{folder_name}' folder")
         else:
             data_rows = [
-                [i, command['name'], command['author'], command['date'], command['description']]
+                [
+                    i,
+                    command["name"],
+                    command["author"],
+                    command["date"],
+                    command["description"],
+                ]
                 for i, command in enumerate(self.help_commands_json["commands"], 1)
             ]
 
@@ -120,7 +133,7 @@ class Subcommands:
         header_titles = ["#", "Name"]
         column_widths = [4, 20]
         title = "Exploits"
-        
+
         table = Table(header_titles, column_widths, title=title)
 
         folders = [

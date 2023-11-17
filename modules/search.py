@@ -1,6 +1,7 @@
 from data.logger import Logger
 from modules.table import Table
 
+
 class Log:
     def msg(status):
         Logger.__client_logger__(status, "logs.vs", "./logs/")
@@ -62,9 +63,8 @@ class SearchCommand:
                 ]
                 for i, exploit_instance in enumerate(matching_exploits, 1)
             ]
-            
+
             table.print_table(data_rows)
             print("")
         else:
             print(f"\n{' ' * column_widths[0]}No results found for -> {search_term}\n")
-
