@@ -2,7 +2,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/0romos/Axer">
+  <a href="https://github.com/AxerVault/Axer">
     <img src="https://media.discordapp.net/attachments/1115614887658410085/1141340196995092480/Axer.png" alt="Logo" width="100" height="100">
   </a>
 
@@ -11,14 +11,14 @@
   <p align="center">
     Exploit faster with simplicity and ease
     <br />
-    <a href="https://github.com/0romos/Axer"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/AxerVault/Axer"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/0romos/Axer/">View Demo</a>
+    <a href="https://github.com/AxerVault/Axer/">View Demo</a>
     ·
-    <a href="https://github.com/0romos/Axer/issues">Report Bug</a>
+    <a href="https://github.com/AxerVault/Axer/issues">Report Bug</a>
     ·
-    <a href="https://github.com/0romos/Axer/issues">Request Feature</a>
+    <a href="https://github.com/AxerVault/Axer/issues">Request Feature</a>
   </p>
 </div>
 
@@ -47,7 +47,7 @@
 
 Axer is a straightforward yet effective Python-based framework tailored to simplify the process of working with digital exploits. This lightweight program is designed to offer users a user-friendly and accessible approach to managing and deploying exploits, catering to both novice and experienced users.
 
-![image](https://github.com/0romos/Axer/assets/138330732/773e1e76-d045-4f28-bc76-f89017dac56a)
+![image](https://github.com/AxerVault/Axer/assets/138330732/de47ffe8-bfef-4ccc-8ff9-5c3d1ce16e06)
 
 
 Axer is your passport to a customized exploit framework, enhancing the capabilities of your Banner Project Repository. Remember, ethical and responsible use of such tools is paramount. Ensure they are harnessed only for authorized and legitimate security testing purposes.
@@ -60,7 +60,7 @@ _Below is an example of how you can instruct your audience on installing and set
 1. Clone the repo
 
    ```sh
-   git clone https://github.com/0romos/Axer.git
+   git clone https://github.com/AxerVault/Axer.git
     ```
 
 <br />
@@ -76,7 +76,7 @@ _Below is an example of how you can instruct your audience on installing and set
     $ python3 main.py
     ```
    
-See the [open issues](https://github.com/0romos/Axer) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/AxerVault/Axer) for a full list of proposed features (and known issues).
 
 <br />
 <center> <h1 align="left" id="features">Features</h1> </center>
