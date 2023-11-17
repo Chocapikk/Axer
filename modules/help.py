@@ -2,7 +2,7 @@ import os
 import json
 
 from data.logger import Logger
-
+from modules.table import Table
 
 class Log:
     def msg(status):
@@ -59,34 +59,30 @@ class HelpCommand:
 
         header_titles = ["#", "Name", "Author", "Date", "Description"]
         column_widths = [4, 20, 20, 20, 50]
-        header = "".join(
-            [title.ljust(width) for title, width in zip(header_titles, column_widths)]
-        )
-        dash_line = "".join(
-            [
-                ("-" * len(title)).ljust(width)
-                for title, width in zip(header_titles, column_widths)
-            ]
-        )
 
-        print(f"\n    Help Menu\n    {'=' * 8}\n    {header}\n    {dash_line}")
+        title= "Help Menu"
+        table = Table(header_titles, column_widths, title=title)
 
+        data_rows = []
         if folder_name:
             filtered_exploits = [
                 exploit for exploit in exploits if exploit.folder == folder_name
             ]
             if filtered_exploits:
-                for i, exploit_instance in enumerate(filtered_exploits, 1):
-                    print(
-                        f"    {i:<{column_widths[0]}}{exploit_instance.name:<{column_widths[1]}}{exploit_instance.author:<{column_widths[2]}}{exploit_instance.creation_date:<{column_widths[3]}}{exploit_instance.description:<{column_widths[4]}}"
-                    )
+                data_rows = [
+                    [i, exploit.name, exploit.author, exploit.creation_date, exploit.description]
+                    for i, exploit in enumerate(filtered_exploits, 1)
+                ]
             else:
                 Log.msg(f"No exploits found in the '{folder_name}' folder")
         else:
-            for i, command in enumerate(self.help_commands_json["commands"], 1):
-                print(
-                    f"    {i:<{column_widths[0]}}{command['name']:<{column_widths[1]}}{command['author']:<{column_widths[2]}}{command['date']:<{column_widths[3]}}{command['description']:<{column_widths[4]}}"
-                )
+            data_rows = [
+                [i, command['name'], command['author'], command['date'], command['description']]
+                for i, command in enumerate(self.help_commands_json["commands"], 1)
+            ]
+
+        if data_rows:
+            table.print_table(data_rows)
         print()
 
     def execute_command(self, command, *args):
@@ -123,25 +119,21 @@ class Subcommands:
 
         header_titles = ["#", "Name"]
         column_widths = [4, 20]
-        header = "".join(
-            [title.ljust(width) for title, width in zip(header_titles, column_widths)]
-        )
-        dash_line = "".join(
-            [
-                ("-" * len(title)).ljust(width)
-                for title, width in zip(header_titles, column_widths)
-            ]
-        )
-
-        print("\n    Exploits\n    " + "=" * 8)
-        print(f"    {header}\n    {dash_line}")
+        title = "Exploits"
+        
+        table = Table(header_titles, column_widths, title=title)
 
         folders = [
             folder
             for folder in os.listdir(exploits_path)
             if os.path.isdir(os.path.join(exploits_path, folder))
         ]
-        for i, folder in enumerate(folders, 1):
-            print(f"    {i:<{column_widths[0]}}{folder:<{column_widths[1]}}")
+
+        data_rows = [[i, folder] for i, folder in enumerate(folders, 1)]
+
+        if data_rows:
+            table.print_table(data_rows)
+        else:
+            print("No exploits found.")
 
         print("\nSyntax: help <exploit-name>\n")
