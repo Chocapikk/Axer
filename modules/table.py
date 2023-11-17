@@ -10,12 +10,24 @@ class Table:
             title_line = f"{self.spacing}{self.title}"
             print(f"\n{title_line}\n{self.spacing}{'=' * len(self.title)}")
 
-        header = "".join([title.ljust(width) for title, width in zip(self.header_titles, self.column_widths)])
-        dash_line = "".join([("-" * len(title)).ljust(width) for title, width in zip(self.header_titles, self.column_widths)])
+        header = "".join(
+            [
+                title.ljust(width)
+                for title, width in zip(self.header_titles, self.column_widths)
+            ]
+        )
+        dash_line = "".join(
+            [
+                ("-" * len(title)).ljust(width)
+                for title, width in zip(self.header_titles, self.column_widths)
+            ]
+        )
 
         print(f"{self.spacing}{header}")
         print(f"{self.spacing}{dash_line}")
 
         for row in data_rows:
-            formatted_row = "".join([str(item).ljust(width) for item, width in zip(row, self.column_widths)])
+            formatted_row = "".join(
+                [str(item).ljust(width) for item, width in zip(row, self.column_widths)]
+            )
             print(f"{self.spacing}{formatted_row}")

@@ -89,7 +89,9 @@ def main(loader, help_command, search_command):
                     folder_name = user_input[1] if len(user_input) > 1 else None
                     help_command.execute(loader.exploits, folder_name)
                 case "search":
-                    search_term = " ".join(user_input[1:]) if len(user_input) > 1 else None
+                    search_term = (
+                        " ".join(user_input[1:]) if len(user_input) > 1 else None
+                    )
                     if search_term:
                         search_command.execute(loader.exploits, search_term)
                     else:
