@@ -1,15 +1,25 @@
 class Varialbes:
-
+    """
+    Class to store global variables for the application.
+    """
     __author__  = "oromos"
     __version__ = "v1.5"
     __repo__    = "github.com/0romos/axer"
 
 
 class Display:
+    """
+    Class for displaying banners and other information.
+    """
 
+    @staticmethod
     def banner():
-        print(f'''
+        """
+        Print a banner with information about the application.
 
+        The banner includes details such as the author, version, and repository.
+        """
+        print(f'''
                         m
      $m                mm            m
       "$mmmmm        m$"    mmmmmmm$"
@@ -23,16 +33,4 @@ class Display:
        """""""$$$$$$$$$$$m """"
          mmmmmmmm"  m$   "$mmmmm
        $$""""""      "$     """"""$$
-     m$"               "m           "
         ''')
-
-#     def banner():
-#         print(f"""
-#    /`-.        .'(   )\.---.     /`-.  
-#  ,' _  \   ,') \  ) (   ,-._(  ,' _  \  
-# (  '-' (  (  '/  /   \  '-,   (  '-' (          Author   ➜  {Varialbes.__author__}
-#  )   _  )  )     )    ) ,-`    ) ,_ .'          Version  ➜  {Varialbes.__version__}
-# (  ,' ) \ (  .'\ \   (  ``-.  (  ' ) \          Repo     ➜  {Varialbes.__repo__}
-#  )/    )/  )/   )/    )..-.(   )/   )/ 
-                                       
-# """)
