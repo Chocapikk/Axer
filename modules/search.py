@@ -1,5 +1,5 @@
 from data.logger import Logger
-
+from modules.table import Table
 
 class Log:
     def msg(status):
@@ -32,51 +32,39 @@ class SearchCommand:
             search_term (str): The search term to match against exploit module attributes.
         """
 
-        search_term_lower = search_term.lower()
+        search_terms_lower = search_term.lower().split()
 
         matching_exploits = [
             exploit
             for exploit in exploits
-            if search_term_lower in exploit.name.lower()
-            or search_term_lower in exploit.author.lower()
-            or search_term_lower in exploit.description.lower()
-            or search_term_lower in exploit.creation_date.lower()
+            if any(
+                word in exploit.name.lower()
+                or word in exploit.author.lower()
+                or word in exploit.description.lower()
+                or word in exploit.creation_date.lower()
+                for word in search_terms_lower
+            )
         ]
 
+        title = f"Search Results for '{search_term}'"
+        header_titles = ["#", "Name", "Author", "Date", "Description"]
+        column_widths = [4, 20, 20, 20, 50]
+        table = Table(header_titles, column_widths, title=title)
+
         if matching_exploits:
-            header_titles = ["#", "Name", "Author", "Date", "Description"]
-            column_widths = [4, 20, 20, 20, 50]
-            header_row = "".join(
+            data_rows = [
                 [
-                    title.ljust(width)
-                    for title, width in zip(header_titles, column_widths)
-                ]
-            )
-            dash_line = "".join(
-                [
-                    ("-" * len(title)).ljust(width)
-                    for title, width in zip(header_titles, column_widths)
-                ]
-            )
-            search_result = f"Search Results for '{search_term}'"
-
-            print(f"\n    {search_result}\n    {'=' * (len(search_result))}")
-            print(f"    {header_row}")
-            print(f"    {dash_line}")
-
-            for i, exploit_instance in enumerate(matching_exploits, 1):
-                row_data = [
                     str(i),
                     exploit_instance.name,
                     exploit_instance.author,
                     exploit_instance.creation_date,
                     exploit_instance.description,
                 ]
-                row = "".join(
-                    [data.ljust(width) for data, width in zip(row_data, column_widths)]
-                )
-                print(f"    {row}")
-            print()
+                for i, exploit_instance in enumerate(matching_exploits, 1)
+            ]
+            
+            table.print_table(data_rows)
+            print("")
         else:
-            print(" ")
-            Log.msg(f"No results found for -> {search_term}\n")
+            print(f"\n{' ' * column_widths[0]}No results found for -> {search_term}\n")
+
