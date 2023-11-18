@@ -42,7 +42,7 @@ class Table:
 
         if self.title:
             title_line = f"{self.spacing}{self.title}"
-            print(f"\n{title_line}\n{self.spacing}{'=' * len(self.title)}")
+            print(f"\n{title_line}\n{self.spacing}{'=' * len(self.title)}\n")
 
         header = "".join(
             [
